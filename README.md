@@ -7,9 +7,7 @@ The **Beam Detection System** is a safety solution designed to monitor and preve
 ## Overview
 
 E-scooters are a popular mode of transportation at Chulalongkorn University, providing a convenient way for students to travel around campus. However, a common issue arises when two or more people ride on a single e-scooter, which significantly increases the risk of accidents. The **Beam Detection System** aims to address this issue by using **real-time video surveillance** powered by **machine learning** to monitor and detect unsafe e-scooter usage.
-
 When the system detects multiple riders on a single e-scooter, an audible sound is triggered as an alert, allowing riders to become aware of the safety violation and take corrective actions.
-
 ## Features
 
 - **Real-time Object Detection:** Uses machine learning models to identify e-scooters and the number of riders in real-time.
