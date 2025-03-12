@@ -49,7 +49,7 @@ To understand how similar object detection and machine learning technologies are
    First, clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/beam-detection-system.git
+   git clone https://github.com/Methasit-Pun/BEAM-detection-system.git
    cd beam-detection-system
    ```
 
