@@ -43,6 +43,122 @@ To understand how similar object detection and machine learning technologies are
 - **Research Paper and Proposal**: [Deep Vision Overview](https://github.com/dusty-nv/jetson-inference/raw/master/docs/images/deep-vision-header.jpg)
 
 ---
+Painpoint
+<img width="902" height="502" alt="image" src="https://github.com/user-attachments/assets/55af3d25-402e-47ad-baff-3d2de3b7a6c1" />
+
+
+Our solution 
+<img width="892" height="484" alt="image" src="https://github.com/user-attachments/assets/d1a7da82-4f8e-4802-9716-dd93951eca8c" />
+
+Hardware Design
+<img width="890" height="504" alt="image" src="https://github.com/user-attachments/assets/1d196ba9-d673-4242-86cc-1163464ac2ee" />
+Hardware Result
+<img width="896" height="517" alt="image" src="https://github.com/user-attachments/assets/25a2029e-c198-44e1-9631-e92044e9adc7" />
+
+
+Software process
+PyTorch and Tensor flow for data collection 
+and model training on Jetson Nano
+
+Ref software and techstack
+https://github.com/Scooter-Radar/escooter-radar-backend?tab=readme-ov-file
+PyTorch
+Tensor flow
+Conda
+
+
+Model Training Categories
+- Beam with no person
+- Beam with one person
+- Beam with two or more person (Rule violation)
+- Beam speed [Future Plan]
+- Correct beam direction [Future Plan]
+
+<img width="233" height="319" alt="example of image from 100+ image of e-scooter dataset that our group capture" src="https://github.com/user-attachments/assets/3e1afe9c-2ebf-410c-af3b-7f3ac44fb902" />
+
+
+Step1 : Collecting Detection Datasets from the internet
+- ref: https://www.kaggle.com/datasets/trainingdatapro/electric-scooters-tracking
+*We didn’t use this method because of low accuracies and time limitation
+
+Step2 : Creating the Label File
+Under “jetson-inference/python/training/detection/ssd/data”, create an empty directory for storing your dataset and a text file that will define the class labels
+
+Step3 : Launching the Tool
+The camera-capture tool accepts the same input URI's on the command line that are found on the camera and multi media page.
+   ```bash
+camera-capture csi://0 #using default MIPI CSI camera
+camera-capture /dev/video0 #using V4L2 camera /dev/video0
+   ```
+
+
+
+Step4 : Collecting Data
+Position the camera at the object, click the Freeze/Edit button. The live camera view will then be 'frozen' and you will be able to draw bounding boxes over the objects. 
+Select the appropriate object class for each bounding box in the grid table in the control window. 
+Click the depressed Freeze/Edit button again to save the data and unfreeze the camera view for the next image.
+
+Sample image with one person on a Beam
+<img width="293" height="482" alt="Sample image with one person on a Beam" src="https://github.com/user-attachments/assets/bf3e4fbb-1000-46c9-a4df-12effa8d753d" />
+
+Step5 : Model training
+After collected sufficient data with PyTorch, use train_ssd.py script and Tensor Flow to train the model.
+
+   ```bash
+cd jetson-inference/python/training/detection/ssd
+python3 train_ssd.py --dataset-type=voc --data=data
+  ```
+
+Step 6 : Audio Synchronisation
+Implement Python code to create responding audio when  traffic law violation with Beam are detected
+```bash
+import pyaudio
+import wave
+
+# Define the path to your audio file
+audio_file = "your_audio_file.wav"
+  ```
+
+
+
+## Experiment Setup
+<img width="789" height="434" alt="design and location" src="https://github.com/user-attachments/assets/53da211a-1cb4-4a47-868f-0b26c0ac538a" />
+
+
+experiment result
+<img width="1383" height="328" alt="image" src="https://github.com/user-attachments/assets/071c1ca3-d875-478b-bcca-7f1b3a397e19" />
+
+AVERAGE ALERT ACCURACY: 90.74%
+TOTAL USER RESPONDED and multi rider incidents: 31% -> 4% within 5 days
+
+
+### Summary
+KEY FINDING
+Total Scooters Observed: Varied per session, ranging from 3 to 25.
+Multi-Rider Incidents: Spotted in most sessions, with a peak of 6 incidents in a single session.
+Alerts Triggered: Closely matched the number of incidents detected, demonstrating system responsiveness.
+Alert Accuracy: Averaged 90.74%, indicating strong system reliability in identifying multi-rider cases.
+User Compliance (% Responded): Varied significantly, with the highest compliance at 50% and the lowest at 0%. The overall trend suggests decreasing compliance over time.
+Insights & Considerations
+The system performed well in detecting multi-rider incidents, maintaining a high accuracy rate (90.74%).
+User compliance rates were inconsistent, possibly indicating a need for better awareness campaigns or stronger enforcement measures.
+Evening sessions (16:00 - 18:00) generally showed lower compliance rates compared to morning sessions.
+Future iterations could explore adding visual alerts or notifications to reinforce safety messaging.
+
+
+
+##Future Works
+Enhance Machine Learning Model:
+Train the detection model with more diverse data, including different rider postures, clothing, and lighting conditions.
+Reduce false positives and ensure better detection of multiple riders in crowded areas.
+Increase User Compliance & Behavior Change
+Introduce visual alerts (LED indicators or mobile notifications) alongside sound-based alerts.
+Experiment with progressive alerts—e.g., a soft warning followed by a louder alert if non-compliance continues.
+Combine video analytics with weight sensors or motion analysis for more precise identification.
+Explore LiDAR or depth-sensing technology to distinguish between one and two riders accurately.
+Expand Deployment to Other Locations
+Extend monitoring to campus gates, intersections, and scooter parking zones for a more comprehensive evaluation.
+Compare results across different areas to understand behavior patterns.
 
 ## Installation and Setup
 
