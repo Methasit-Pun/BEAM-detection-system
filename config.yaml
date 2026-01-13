@@ -1,0 +1,79 @@
+# E-Scooter Detection System Configuration
+
+# Camera Settings
+camera:
+  source: "csi://0"  # Options: "csi://0", "/dev/video0", "0", "video.mp4"
+  width: 1920
+  height: 1080
+  fps: 30
+
+# Model Settings
+model:
+  path: "models/trained-model/ssd-mobilenet.onnx"
+  labels: "models/trained-model/labels.txt"
+  input_blob: "input_0"
+  output_coverage: "scores"
+  output_bbox: "boxes"
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+
+# Detection Classes
+classes:
+  scooter: "beam"  # or "e-scooter"
+  person: "person"
+  empty: "empty"
+  single_rider: "single_rider"
+  multi_rider: "multi_rider"
+
+# Violation Detection
+violation:
+  min_riders_for_alert: 2
+  overlap_threshold: 0.3  # IoU threshold for person-scooter overlap
+  cooldown_seconds: 5     # Minimum time between alerts for same scooter
+  confidence_threshold: 0.6
+
+# Alert System
+alert:
+  enabled: true
+  audio_file: "audio/violation_alert.wav"
+  visual_overlay: true
+  overlay_color: [0, 0, 255]  # BGR: Red
+  overlay_duration: 2.0  # seconds
+
+# Logging
+logging:
+  enabled: true
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_dir: "logs"
+  log_file: "detection.log"
+  save_violations: true
+  violations_file: "logs/violations.csv"
+
+# Display Settings
+display:
+  show_window: true
+  window_name: "E-Scooter Safety Detection"
+  show_fps: true
+  show_confidence: true
+  bbox_thickness: 2
+  text_font_scale: 0.6
+
+# Performance
+performance:
+  enable_cuda: true
+  num_threads: 4
+  buffer_size: 1
+
+# Output
+output:
+  save_video: false
+  output_path: "results/output.mp4"
+  save_detections: true
+  detections_path: "results/detections.json"
+
+# Development/Debug
+debug:
+  verbose: false
+  save_frames: false
+  frames_dir: "results/frames"
+  print_detections: false
