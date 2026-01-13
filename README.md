@@ -22,6 +22,20 @@
 
 ---
 
+## ⚡ TL;DR
+
+Real-time AI system detecting multi-rider e-scooter violations at Chulalongkorn University using SSD-MobileNet on Jetson Nano. **90.74% accuracy**, **87% violation reduction** in 5 days. Processes 15-20 FPS with instant audio alerts. Built with PyTorch, TensorFlow, OpenCV.
+
+**Quick Start:**
+```bash
+git clone https://github.com/Methasit-Pun/BEAM-detection-system.git
+cd BEAM-detection-system
+pip install -r requirements.txt
+python detect_e_scooter.py --config config.yaml
+```
+
+---
+
 ## 📋 Table of Contents
 
 - [🎯 Problem Statement](#-problem-statement)
@@ -41,7 +55,9 @@
 
 ## 🎯 Problem Statement
 
+<div align="center">
 <img width="600" alt="Problem: Multiple riders on single e-scooters increase accident risk" src="https://github.com/user-attachments/assets/55af3d25-402e-47ad-baff-3d2de3b7a6c1" />
+</div>
 
 Multiple riders on single e-scooters create safety hazards on campus. This common violation increases accident risk and requires automated monitoring.
 
@@ -49,7 +65,9 @@ Multiple riders on single e-scooters create safety hazards on campus. This commo
 
 ## 💡 Solution Overview
 
+<div align="center">
 <img width="600" alt="Detection system with real-time audio alerts" src="https://github.com/user-attachments/assets/d1a7da82-4f8e-4802-9716-dd93951eca8c" />
+</div>
 
 Real-time computer vision system that:
 - Detects e-scooters and counts riders using SSD-MobileNet
@@ -83,7 +101,9 @@ Real-time computer vision system that:
 - ⏰ Test period: 5 days across multiple campus locations
 - 🕐 Test hours: Morning (08:00-10:00) and Evening (16:00-18:00)
 
+<div align="center">
 <img width="800" alt="Experiment results showing detection accuracy over multiple sessions" src="https://github.com/user-attachments/assets/071c1ca3-d875-478b-bcca-7f1b3a397e19" />
+</div>
 
 ---
 
@@ -154,44 +174,31 @@ Real-time computer vision system that:
 
 ### Software Architecture
 
+<div align="center">
+
 ```mermaid
-graph TB
-    subgraph "Input Layer"
-        A[Camera Feed CSI/USB] --> B[Video Capture OpenCV]
-    end
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'16px'}}}%%
+graph LR
+    A["📹 Camera<br/>(CSI/USB)"] --> B["🎬 Video<br/>Capture"]
+    B --> C["🔄 Preprocess<br/>(300x300)"]
+    C --> D["🧠 Model<br/>(SSD-MobileNet)"]
+    D --> E["📦 Detections"]
+    E --> F{"🔍 Multi-Rider<br/>Check"}
+    F -->|"✓ Yes"| G["🚨 ALERT<br/>(Audio+Visual)"]
+    F -->|"✗ No"| H["✅ Continue<br/>Monitoring"]
+    G --> I["📝 Log<br/>Violation"]
+    H --> B
+    I --> B
     
-    subgraph "Processing Pipeline"
-        B --> C[Frame Preprocessing]
-        C --> D[SSD-MobileNet ONNX]
-        D --> E[Object Detection]
-        E --> F[Bounding Box Extraction]
-    end
-    
-    subgraph "Detection Logic"
-        F --> G[Scooter Detection]
-        F --> H[Person Detection]
-        G --> I[Overlap Analysis]
-        H --> I
-        I --> J{Count Riders}
-    end
-    
-    subgraph "Alert System"
-        J -->|>= 2 Riders| K[Violation Detected]
-        J -->|< 2 Riders| L[Normal Operation]
-        K --> M[Trigger Audio Alert PyAudio]
-        K --> N[Visual Warning Overlay]
-    end
-    
-    subgraph "Output & Logging"
-        M --> O[Speaker Output]
-        N --> P[Display Frame]
-        K --> Q[Log Violation Data]
-    end
-    
-    style K fill:#ff6b6b
-    style L fill:#51cf66
-    style D fill:#339af0
+    style F fill:#ffeb3b,stroke:#f57c00,stroke-width:4px,color:#000
+    style G fill:#ff6b6b,stroke:#c62828,stroke-width:3px,color:#fff
+    style H fill:#51cf66,stroke:#2e7d32,stroke-width:2px,color:#000
+    style D fill:#339af0,stroke:#1565c0,stroke-width:2px,color:#fff
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style B fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 ```
+
+</div>
 
 ### Pipeline Flow
 
@@ -229,13 +236,19 @@ Detected Objects → Violation Check → Alert/Log → Display
 - **Output:** Alert trigger + annotated frame
 
 ### Hardware Setup
+<div align="center">
 <img width="600" alt="Hardware design and component layout" src="https://github.com/user-attachments/assets/1d196ba9-d673-4242-86cc-1163464ac2ee" />
+</div>
 
 ### Deployed System
+<div align="center">
 <img width="600" alt="Physical deployment on campus" src="https://github.com/user-attachments/assets/25a2029e-c198-44e1-9631-e92044e9adc7" />
+</div>
 
 ### Experiment Locations
+<div align="center">
 <img width="600" alt="Test locations across campus" src="https://github.com/user-attachments/assets/53da211a-1cb4-4a47-868f-0b26c0ac538a" />
+</div>
 
 ---
 
