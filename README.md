@@ -94,16 +94,10 @@ Real-time computer vision system that:
 </div>
 
 **Field Deployment Statistics:**
-- 📹 Monitored 3-25 scooters per session
-- ⚠️ Peak: 6 multi-rider incidents detected in single session
 - 📈 Alert-to-incident correlation: >95%
 - 👥 User compliance: Variable (0-50%), decreasing trend over time
 - ⏰ Test period: 5 days across multiple campus locations
 - 🕐 Test hours: Morning (08:00-10:00) and Evening (16:00-18:00)
-
-<div align="center">
-<img width="800" alt="Experiment results showing detection accuracy over multiple sessions" src="https://github.com/user-attachments/assets/071c1ca3-d875-478b-bcca-7f1b3a397e19" />
-</div>
 
 ---
 
